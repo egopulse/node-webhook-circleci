@@ -3,6 +3,7 @@ const url = require('url');
 const fs = require('fs');
 const jsonBody = require('body/json');
 const spawn = require('child_process').spawn;
+require('shelljs/global');
 
 const {CIRCLECI_WEBHOOK_PORT = 9001, CIRCLECI_WEBHOOK_COMMAND = './sample.sh'} = process.env;
 
@@ -37,13 +38,5 @@ server.on('clientError', (err, socket) => {
 server.listen(CIRCLECI_WEBHOOK_PORT);
 
 const delegate = (json) => {
-  const options = {
-    detached: true
-  };
-
-  const child = spawn(CIRCLECI_WEBHOOK_COMMAND, [], options);
-  
-  child.stdin.write(JSON.stringify(json));
-  child.stdin.end();
-  child.unref();
+  echo(JSON.stringify(json)).exec(CIRCLECI_WEBHOOK_COMMAND, {async:true});
 }
