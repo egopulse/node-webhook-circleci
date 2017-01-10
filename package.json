@@ -1,0 +1,14 @@
+{
+  "name": "node-webhook-circleci",
+  "version": "1.0.0",
+  "description": "Setup a dead simple server to receive request from circle ci. It then will delegate things to a specific command",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body": "^5.1.0"
+  }
+}
