@@ -12,12 +12,16 @@ const server = http.createServer((req, res) => {
     return res.end("Invalid METHOD");
   }
 
-  jsonBody(req, res, (err, json) => {
+  jsonBody(req, res, (err, payload) => {
     if (err) {
       res.statusCode = 400;
       return res.end("Invalid JSON body");
     }
-
+    const json = payload.payload;
+    if (!json) {
+      res.statusCode = 400;
+      return res.end("Invalid JSON body");
+    }
     const {outcome, vcs_revision, build_num} = json;
 
     res.statusCode = 400;
