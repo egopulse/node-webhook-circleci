@@ -22,9 +22,10 @@ const server = http.createServer((req, res) => {
       res.statusCode = 400;
       return res.end("Invalid JSON body");
     }
-    const {outcome, vcs_revision, build_num} = json;
+    const {branch, outcome, vcs_revision, build_num} = json;
 
     res.statusCode = 400;
+    if (!branch || !(branch === 'master' || branch.startsWith('hotfix'))) return res.end("Invalid branch");
     if (!outcome || outcome === '') return res.end("Invalid status");
     if (outcome !== 'success') return res.end("Ignored build status");
     if (!vcs_revision || vcs_revision === '') return res.end("Invalid revision hash");
